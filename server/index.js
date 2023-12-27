@@ -19,19 +19,20 @@ app.get("/", (req, res) => {
 
 //JWT Authentication and Authorization
 // Sample user data (in-memory for simplicity)
-const users = [
+/*const users = [
   { id: 1, username: 'admin', password: 'admin123', role: 'admin' },
   { id: 2, username: 'user', password: 'user123', role: 'user' },
 ];
+*/
 
 // Authentication route
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  //var hash_password = db.generate_password(password);
+  var hash_password = db.generate_password(password);
   //console.log('pwd : '+hash_password);
   // Example: Validate credentials (replace with database validation)
   //const user = users.find(u => u.username === username && u.password === password);
-  const user = await  db.query("select fileno from stafftb  where fileno=? and password=? limit 1",[username,password]);
+  const user = await  db.query("select fileno from stafftb  where fileno=? and password=? limit 1",[username,hash_password]);
   //console.log('users: '+user);
   if (user.length > 0) {
     // Generate a JWT token

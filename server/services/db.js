@@ -1,11 +1,13 @@
 const mysql = require('mysql2/promise');
 const config = require('../config');
 const helper = require('../helper');
-const crypto = require('node:crypto');
+const crypto = require('crypto');
 
-const hash_512 = crypto.createHash('sha512');
-const hash_md5 = crypto.createHash('md5');
-
+function generate_password(data,salt='saltsugar') {
+  const data_concat = data + salt;
+  const sha512Hash = crypto.createHash('sha512');
+  return sha512Hash.update(data_concat).digest('hex');
+}
 async function query(sql, params) {
   const connection = await mysql.createConnection(config.db);
 
@@ -73,7 +75,7 @@ async function dselect(fieldList,table,criteria,params){
   
 }
 
-async function generate_password(password,salt='uapro'){
+async function generate_password2(password,salt='uapro'){
   try
   {
     
