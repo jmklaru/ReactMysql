@@ -5,7 +5,12 @@ const leave = require('../services/leave');
 /* GET programming languages. */
 router.get('/', async function(req, res, next) {
   try {
-    res.json(await leave.getMultiple(req.query.page));
+    console.log(req.user.role);
+    const roles = req.user.role.find(u => u.role === 'role_04');
+    if(roles)
+      res.json(await leave.getMultiple(req.query.page));
+    else
+      res.json({message:'Unauthorized role access'});
   } catch (err) {
     console.error(`Error while getting leave records `, err.message);
     next(err);
@@ -17,6 +22,7 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function(req, res, next) {
     try {
       res.json(await leave.create(req.body));
+      
     } catch (err) {
       console.error(`Error while creating leave record`, err.message);
       next(err);

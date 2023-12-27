@@ -4,8 +4,7 @@ const port = 3000;
 const leaveRouter = require("./routes/leave");
 const jwt = require('jsonwebtoken');
 const config = require('./config');
-
-//const db = require('./services/db');
+const db = require('./services/db');
 //const helper = require('./helper');
 
 app.use(express.json());
@@ -26,15 +25,24 @@ const users = [
 ];
 
 // Authentication route
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
+  //var hash_password = db.generate_password(password);
+  //console.log('pwd : '+hash_password);
   // Example: Validate credentials (replace with database validation)
-  const user = users.find(u => u.username === username && u.password === password);
-
-  if (user) {
+  //const user = users.find(u => u.username === username && u.password === password);
+  const user = await  db.query("select fileno from stafftb  where fileno=? and password=? limit 1",[username,password]);
+  //console.log('users: '+user);
+  if (user.length > 0) {
     // Generate a JWT token
-    const token = jwt.sign({ userId: user.id, username: user.username, role: user.role }, config.secret_key, { expiresIn: '1h' });
+    var roles = await  db.query("select role_id as role from staff_roletb where fileno=?",[username]);
+    if(roles.length === 0)
+        roles = [{role:'general'}];
+    else
+        roles.push({role:'general'});
+
+    //console.log(roles);
+    const token = jwt.sign({ username: user[0].fileno, role: roles }, config.secret_key, { expiresIn: '1h' });
 
     res.json({ token });
   } else {
@@ -63,9 +71,11 @@ const authorizeUser = (req, res, next) => {
 // Protected route example
 app.get('/api/profile', authorizeUser, (req, res) => {
   // Access user information from the request
-  const { userId, username, role } = req.user;
+  const { username, role } = req.user;
 
-  res.json({ userId, username, role, message: 'Authorized access to profile' });
+
+
+  res.json({ username, role, message: 'Authorized access to profile' });
 });
 
 
