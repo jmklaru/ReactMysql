@@ -1,0 +1,28 @@
+
+PUT http://localhost:3000/testleave/5 HTTP/1.1
+content-type: application/json
+{
+      "leave_type": "Working Leaves",
+      "no_of_days": "32",
+      "category": "All",
+      "entry_date": "2023-12-26",
+      "entry_time": "10:05:02",
+      "entry_by": "APIx"
+}
+
+
+
+GET http://localhost:3000/testleave
+
+
+POST http://localhost:3000/testleave HTTP/1.1
+content-type: application/json
+{
+      "leave_type": "Working Leaves",
+      "no_of_days": "72",
+      "category": "All",
+      "entry_date": "2023-12-26",
+      "entry_time": "10:05:02",
+      "entry_by": "API"
+}
+
