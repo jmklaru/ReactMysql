@@ -1,0 +1,11 @@
+#React application
+
+npx create-react-app <foldername> # to install latest react app
+cd foldername
+npm start
+
+npm install axios # to access API calls
+npm install react-router-dom #react router
+
+
+

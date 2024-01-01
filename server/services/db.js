@@ -90,6 +90,17 @@ async function generate_password2(password,salt='uapro'){
   
 }
 
+async function get_permissionServiceRole(username,service_code,permission){
+try {
+  const permissionServiceRole = await query("select distinct p.role_code,p.service_code, p.permission from staff_role_permissiontb p, roletb_definition r, service_permissiontb pp where p.role_code=r.role_code and p.service_code=r.service_code and p.permission=pp.permission and p.service_code=pp.service_code and  p.fileno=? and p.service_code=? and p.permission=?",[username,service_code,permission]);
+
+  const data = helper.emptyOrRows(permissionServiceRole);
+  return data;
+
+} catch (err) {
+  console.error(err.message);
+}
+}
 /*
 function logs($regno,$log_type,$log_description)
 		{
@@ -121,5 +132,6 @@ module.exports = {
   dlookup,
   dselect,
   dcount,
-  generate_password
+  generate_password,
+  get_permissionServiceRole
 }
