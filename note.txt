@@ -9,3 +9,17 @@ npm install react-router-dom #react router
 
 
 
+#React
+
+React snippet
+
+command + shift + R to open snippet search
+type rfce or rafce # to create a new component with file name as the component name 
+
+#reac icon
+visit npmjs.com and search for react-icons
+install it using
+npm i react-icons --save
+npm i react-icons --save-prod # to move the react-icons from development to production stage
+
+#current chapter 9
