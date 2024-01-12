@@ -24,7 +24,7 @@ function Content({ items, handleCheck, handleDelete}) {
     
   return (
 
-    <main>
+    <>
       {
         items.length ? (
               <ItemList items={items} handleCheck={handleCheck} handleDelete={handleDelete} />
@@ -43,7 +43,7 @@ function Content({ items, handleCheck, handleDelete}) {
         <button onClick={()=> handleClick2('kamal')}>Click it</button>
         <button onClick={(e)=> handleClick3(e)}>Click it</button> */}
 
-    </main>
+    </>
 
     
   )

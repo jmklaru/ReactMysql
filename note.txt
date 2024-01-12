@@ -22,4 +22,7 @@ install it using
 npm i react-icons --save
 npm i react-icons --save-prod # to move the react-icons from development to production stage
 
-#current chapter 9
+#current chapter 12
+json sever
+
+npx json-server -p 3500 -w data/db.json
