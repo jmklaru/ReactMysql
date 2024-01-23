@@ -26,3 +26,14 @@ npm i react-icons --save-prod # to move the react-icons from development to prod
 json sever
 
 npx json-server -p 3500 -w data/db.json
+
+#react router
+npm i react-router-dom -S
+
+#react router tutorial
+https://reactrouter.com/en/6.21.3/start/tutorial
+
+#Bootstrap
+npm i bootstrap
+
+import 'bootstrap/dist/css/bootstrap.min.css'

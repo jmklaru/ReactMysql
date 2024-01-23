@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { useState, useEffect } from 'react';
 import AddItem from './AddItem';
 import SearchItem from './SearchItem';
+import apiRequest from './ApiRequest';
 
 
 function App() {
@@ -79,31 +80,62 @@ function App() {
     setItems(newValue);
     localStorage.setItem("shoppingList", JSON.stringify(newValue));
   } */
-  const addItem = (item) => {
+  const addItem = async (item) => {
     const id = items.length ? items[items.length -1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
     //setNewItemValue(listItems);
     setItems(listItems);
 
+    const postOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(myNewItem)
+    }
+    const result = await apiRequest(API_URL, postOptions);
+    if(result) setFetchError(result);
 
   }
-  const handleCheck = (id) => { 
+  const handleCheck = async (id) => { 
     //console.log(`Key: ${id}`);
     const listItems = items.map((item) => (item.id === id ? {...item, checked: !item.checked}:item));
    // setItems(listItems);
     //localStorage.setItem("shoppingList", JSON.stringify(listItems));
   // setNewItemValue(listItems);   
       setItems(listItems);
+
+    const myItem = items.filter((item) => item.id===id);
+    const updateOperation = {
+      method: 'PUT',
+       headers:{
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({ checked:myItem[0].checked })
+    }
+    const reqUrl = `${API_URL}/${id}`;
+    console.log(reqUrl);
+    const result = await apiRequest(reqUrl,updateOperation);
+    if(result) setFetchError(result);
+
   }
   
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     //console.log(id);
     const listItems = items.filter((item) => item.id !==id );
     //setItems(listItems);
     //localStorage.setItem("shoppingList", JSON.stringify(listItems));
     //setNewItemValue(listItems);
     setItems(listItems);
+
+    const deleteOperation = {
+      method: 'DELETE'
+      }
+    
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(reqUrl,deleteOperation);
+    if(result) setFetchError(result);
   }
 
   const handleSubmit = (e) => {
