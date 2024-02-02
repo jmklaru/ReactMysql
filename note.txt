@@ -37,3 +37,8 @@ https://reactrouter.com/en/6.21.3/start/tutorial
 npm i bootstrap
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+
+
+#install date funtion dependency
+
+npm i date-fns -S

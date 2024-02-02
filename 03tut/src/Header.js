@@ -1,11 +1,11 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/js/bootstrap.min.js';
 
-export const Header = () => {
+export const Header = ({ title }) => {
   return (
-    <header>
-      <h1>Header</h1>
+    <header className='Header'>
+      <h1>{title}</h1>
     </header>
   )
 }
